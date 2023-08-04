@@ -1,0 +1,13 @@
+.header__button-burger-exit {
+    background: none;
+    color: #fff;
+    border: none;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.header__button-burger-exit:hover {
+    opacity: .6;
+}

@@ -1,0 +1,11 @@
+.header__menu {
+    display: flex;
+    column-gap: 24px;
+    align-items: center;
+}
+
+@media screen and (max-width: 767px) {
+    .header__menu {
+        padding-right: 8.5%;
+    }
+}

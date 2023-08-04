@@ -1,0 +1,28 @@
+.popup__button-exit {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    background-color: transparent;
+    background-image: url(../../../image/сloseIcon.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+}
+
+.popup__button-exit:hover {
+    opacity: .6;
+}
+
+@media screen and (max-width: 480px) {
+    .popup__button-exit {
+        width: 20px;
+        height: 20px;
+        right: 0;
+        top: -35px;
+    }
+}

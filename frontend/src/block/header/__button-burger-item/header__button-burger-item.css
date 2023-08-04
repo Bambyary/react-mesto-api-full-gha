@@ -1,0 +1,9 @@
+.header__button-burger-item {
+    width: 100%;
+    height: 2px;
+    padding: 0;
+    background-image: url(../../../image/Line\ 43.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

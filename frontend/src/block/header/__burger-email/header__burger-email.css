@@ -1,0 +1,11 @@
+.header__burger-email {
+    min-width: 200px;
+    max-width: 250px;
+    margin: 0 auto 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.2;
+}

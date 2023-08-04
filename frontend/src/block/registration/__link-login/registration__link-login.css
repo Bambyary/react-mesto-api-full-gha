@@ -1,0 +1,17 @@
+.registration__link-login {
+    display: block;
+    padding-top: 15px;
+    text-align: center;
+    width: 100%;
+    color: #ccc;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.2;
+    min-height: 17px;
+    text-decoration: none;
+}
+
+.registration__link-login:hover {
+    opacity: .6;
+}

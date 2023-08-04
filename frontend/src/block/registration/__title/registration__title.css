@@ -1,0 +1,10 @@
+.registration__title {
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 1.2;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    padding-bottom: 50px;
+    font-style: normal;
+}

@@ -1,0 +1,22 @@
+.header__button-burger-close {
+    display: none;
+}
+
+@media screen and (max-width: 576px) {
+    .header__button-burger-close {
+        display: block;
+        width: 20px;
+        height: 20px;
+        background: none;
+        border: none;
+        background-image: url(../../../image/сloseIcon.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        cursor: pointer;
+    }
+    
+    .header__button-burger-close:hover {
+        opacity: .6;
+    }
+}

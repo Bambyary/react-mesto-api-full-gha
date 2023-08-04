@@ -1,0 +1,23 @@
+.header__button-burger {
+    display: none;
+}
+
+@media screen and (max-width: 576px) {
+    .header__button-burger {
+        display: block;
+        padding: 0;
+        background: none;
+        border: none;
+        width: 24px;
+        height: 23px;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        cursor: pointer;
+    }
+
+    .header__button-burger:hover {
+        opacity: .6;
+    }
+}
