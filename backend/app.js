@@ -7,7 +7,7 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const { celebrate, Joi } = require('celebrate');
-const cors = require('cors');
+const cors = require('./middlewares/cors');
 const userRoutes = require('./routes/users');
 const cardRoutes = require('./routes/cards');
 const { login, createUser } = require('./controllers/users');
@@ -31,7 +31,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb')
 
 app.use(helmet());
 app.use(limiter);
-app.use(cors({ origin: ['http://localhost:3000', 'https://localhost:3000', 'http://localhost:3000', 'http://localhost:3001', 'http://bambyary.nomoreparties.co', 'https://bambyary.nomoreparties.co'] }));
+app.use(cors);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(requestLogger);
