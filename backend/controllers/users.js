@@ -17,17 +17,17 @@ const login = (req, res, next) => {
     .then((user) => {
       if (user) {
         const token = jwt.sign({ _id: user._id }, JWT_SECRET);
-        res.cookie('jwt', token, {
-          maxAge: 3600000 * 24 * 7,
-          httpOnly: true,
-          sameSite: true,
-        });
-        return res.status(200).send({
-          data: {
-            name: user.name, about: user.about, avatar: user.avatar, email: user.email,
-          },
-        });
-        // res.status(200).send({ token });
+        // res.cookie('jwt', token, {
+        //   maxAge: 3600000 * 24 * 7,
+        //   httpOnly: true,
+        //   sameSite: true,
+        // });
+        // return res.status(200).send({
+        //   data: {
+        //     name: user.name, about: user.about, avatar: user.avatar, email: user.email,
+        //   },
+        // });
+        return res.status(200).send({ token });
       }
 
       throw new Unauthrized('Неправильные почта или пароль');
@@ -37,7 +37,7 @@ const login = (req, res, next) => {
 
 const getUser = (_req, res, next) => {
   User.find({})
-    .then((user) => res.status(200).send({ user }))
+    .then((user) => res.status(200).send(user))
     .catch((err) => next(err));
 };
 
@@ -58,11 +58,7 @@ const getUserById = (req, res, next) => {
 const getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
     .orFail()
-    .then((user) => res.send({
-      data: {
-        email: user.email, name: user.name, about: user.about, avatar: user.avatar, _id: user._id,
-      },
-    }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'CastError') {
         return next(new BadRequest('Передача некорректных данных при поиске пользователя'));
@@ -108,7 +104,7 @@ const updateUser = (req, res, next) => {
     { new: true, runValidators: true },
   )
     .orFail()
-    .then((user) => res.status(200).send({ user }))
+    .then((user) => res.status(200).send(user))
     // eslint-disable-next-line consistent-return
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -130,7 +126,7 @@ const updateAvatar = (req, res, next) => {
     { new: true, runValidators: true },
   )
     .orFail()
-    .then((user) => res.status(200).send({ user }))
+    .then((user) => res.status(200).send(user))
     // eslint-disable-next-line consistent-return
     .catch((err) => {
       if (err.name === 'ValidationError') {

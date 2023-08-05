@@ -35,41 +35,33 @@ function App() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        api.getUserInfo().then(response => {
-            setCurrentUser(response);
-        }).catch(err => console.log(err));
-
-        api.getCards().then(data => {
-            setCards(data.map(card => {
-                return card;
-            }));
-        }).catch(err => console.log(err));
-
         tokenCheck();
+        loggedIn && Promise.all([api.getUserInfo(), api.getCards()])
+        .then(([profileInfo, cards]) => {
+          setCurrentUser(profileInfo)
+          setCards(cards)
+        })
+        .catch(err => console.log(err))
+  }, [loggedIn])
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    function tokenCheck () {  
-        auth.getToken().then(res => {
-            if (res) {
-                setLoggedIn(true);
-                setUserEmail({
-                    email: res.data.email
-                });
-                navigate('/', {replace: true})
-            } else {
-                return;
-            }                 
-        }).catch(e => {
-            setLoggedIn(false)
-            console.log(e);
-        })  
-           
-        // if (localStorage.getItem('token')) {
-        //     const token = localStorage.getItem('token');
-            
-        // }
+    function tokenCheck () {     
+        if (localStorage.getItem('token')) {
+            const token = localStorage.getItem('token');
+            auth.getToken(token).then(res => {
+                if (res) {
+                    setLoggedIn(true);
+                    setUserEmail({
+                        email: res.email
+                    });
+                    navigate('/', {replace: true})
+                } else {
+                    return;
+                }                 
+            }).catch(e => {
+                setLoggedIn(false)
+                console.log(e);
+            })
+        }
     }
 
     function handleEditProfileClick () {
@@ -94,7 +86,9 @@ function App() {
     }
 
     function handleCardLike (card) {
-        const isLiked = card.likes.some(like => like._id === currentUser._id);
+        const isLiked = card.likes.some(like => {
+            return like === currentUser._id;
+        });
 
         api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
             setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
@@ -172,7 +166,8 @@ function App() {
                 <Routes>
 
                 <Route path='/' element={<ProtectedRoute 
-                    loggedIn={loggedIn} 
+                    loggedIn={loggedIn}
+                    setLoggedIn={setLoggedIn} 
                     element={Main}
                     userEmail={userEmail.email}
                     onEditProfile={handleEditProfileClick} 

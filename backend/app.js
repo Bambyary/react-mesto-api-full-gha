@@ -2,7 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const rateLimit = require('express-rate-limit');
+// const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
@@ -16,9 +16,9 @@ const NotFound = require('./errors/NotFound');
 const { regExp } = require('./utils/constants');
 const { errorHeandler } = require('./middlewares/errorHeandler');
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, max: 100, standardHeaders: true, legacyHeaders: false,
-});
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, max: 100, standardHeaders: true, legacyHeaders: false,
+// });
 
 const { PORT = 4000 } = process.env;
 
@@ -29,7 +29,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb')
   .catch(() => console.log('База данных не подключена'));
 
 app.use(helmet());
-app.use(limiter);
+// app.use(limiter);
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(cookieParser());
 app.use(bodyParser.json());

@@ -12,6 +12,7 @@ function Header (props) {
     function signOut () {
         if(props.buttonText === 'Выйти') {
             localStorage.removeItem('token');
+            props.setLoggedIn(false);
             setEmail('');
             navigate('/sign-in', {replace: true})
         } else if (props.buttonText === 'Войти') {

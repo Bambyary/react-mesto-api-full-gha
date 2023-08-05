@@ -5,7 +5,10 @@ const NotFound = require('../errors/NotFound');
 
 const getCards = (_req, res, next) => {
   Card.find({})
-    .then((card) => res.status(200).send({ data: card }))
+    .then((card) => {
+      console.log(card);
+      return res.status(200).send(card);
+    })
     .catch((err) => next(err));
 };
 
@@ -14,7 +17,7 @@ const createCard = (req, res, next) => {
   const userId = req.user._id;
 
   Card.create({ name, link, owner: userId })
-    .then((card) => res.status(201).send({ data: card }))
+    .then((card) => res.status(201).send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequest('Переданы некорректные данные при создании карточки.'));
@@ -37,7 +40,7 @@ const deleteCard = (req, res, next) => {
         return next(new Forbidden('Вы не можете удалить чужую карточку.'));
       }
 
-      Card.deleteOne(card).then(() => res.status(200).send({ card }));
+      Card.deleteOne(card).then(() => res.status(200).send(card));
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -54,7 +57,7 @@ const addCardLike = (req, res, next) => {
     { new: true },
   )
     .orFail()
-    .then((like) => res.status(201).send({ data: like }))
+    .then((like) => res.status(201).send(like))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         return next(new NotFound('Переданы некорректные данные.'));
@@ -73,7 +76,7 @@ const deleteCardLike = (req, res, next) => {
     { new: true },
   )
     .orFail()
-    .then((like) => res.status(200).send({ data: like }))
+    .then((like) => res.status(200).send(like))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         return next(new NotFound('Переданы некорректные данные.'));

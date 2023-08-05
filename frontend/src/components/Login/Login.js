@@ -78,7 +78,7 @@ function Login (props) {
             props.userEmail({
                 email: email
             })
-            if (data) {
+            if (data.token) {
                 setEmail('');
                 setPassword('');
                 props.handleLogin();

@@ -8,6 +8,7 @@ const {
 } = require('../controllers/users');
 // eslint-disable-next-line import/order, import/no-extraneous-dependencies
 const { celebrate, Joi } = require('celebrate');
+const { regExp } = require('../utils/constants');
 
 router.get('/users', getUser);
 router.get('/users/me', getUserInfo);
@@ -24,7 +25,7 @@ router.patch('/users/me', celebrate({
 }), updateUser);
 router.patch('/users/me/avatar', celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().pattern(/https?:\/\/(www\.)?[a-zA-Z0-9-._~:/?#\[\]@!\$&'()*+,;=]*\.(com|net|org|ru|png)(#.+)?$/),
+    avatar: Joi.string().pattern(regExp),
   }),
 }), updateAvatar);
 

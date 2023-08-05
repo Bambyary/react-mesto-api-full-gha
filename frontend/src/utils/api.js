@@ -2,7 +2,6 @@
 class Api {
     constructor (baseUrl) {
         this._baseUrl = baseUrl;
-        // this._headers = headers;
     }
 
     _getResponseData (response) {
@@ -15,7 +14,10 @@ class Api {
 
     getCards () {
         return fetch(`${this._baseUrl}/cards`, {
-            // headers: this._headers,
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`,
+                "content-type": 'application/json; charset=UTF-8'
+            },
             credentials: 'include',
         })
         .then(response => {
@@ -26,8 +28,11 @@ class Api {
     addCard(card){
         return fetch(`${this._baseUrl}/cards`, {
             method: 'POST',
-            credentials: 'include',
-            // headers: this._headers,
+            // credentials: 'include',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`,
+                "content-type": 'application/json; charset=UTF-8'
+            },
             body: JSON.stringify({
                 name: card.name,
                 link: card.link
@@ -40,8 +45,11 @@ class Api {
 
     getUserInfo() {
         return fetch (`${this._baseUrl}/users/me`, {
-            credentials: 'include',
-            // headers: this._headers
+            // credentials: 'include',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`,
+                "content-type": 'application/json; charset=UTF-8'
+            },
         })
         .then((response) => {
             return this._getResponseData(response);
@@ -51,8 +59,11 @@ class Api {
     editUserInfo(userData) {
         return fetch (`${this._baseUrl}/users/me`, {
             method: "PATCH",
-            credentials: 'include',
-            // headers: this._headers,
+            // credentials: 'include',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`,
+                "content-type": 'application/json; charset=UTF-8'
+            },
             body: JSON.stringify({
                 name: userData.name,
                 about: userData.about
@@ -67,8 +78,11 @@ class Api {
         console.log(cardId)
         return fetch (`${this._baseUrl}/cards/${cardId}`, {
             method: "DELETE",
-            credentials: 'include',
-            // headers: this._headers,
+            // credentials: 'include',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`,
+                "content-type": 'application/json; charset=UTF-8'
+            },
         })
         .then(response => {
             return this._getResponseData(response);
@@ -78,8 +92,11 @@ class Api {
     changeLikeCardStatus (cardId, isLiked) {
         return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
             method: !isLiked ? 'PUT' : 'DELETE',
-            credentials: 'include',
-            // headers: this._headers
+            // credentials: 'include',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`,
+                "content-type": 'application/json; charset=UTF-8'
+            },
         }).then(response => {
             return this._getResponseData(response);
         })
@@ -88,8 +105,11 @@ class Api {
     editAvatar (data) {
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: "PATCH",
-            credentials: 'include',
-            // headers: this._headers,
+            // credentials: 'include',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('token')}`,
+                "content-type": 'application/json; charset=UTF-8'
+            },
             body: JSON.stringify({
                 avatar: data.avatar
             })

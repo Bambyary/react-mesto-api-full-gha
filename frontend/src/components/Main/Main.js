@@ -12,7 +12,7 @@ function Main (props) {
     return (
         
         <>
-            <Header buttonText='Выйти' path='/sign-in' userEmail={props.userEmail} />
+            <Header buttonText='Выйти' path='/sign-in' userEmail={props.userEmail} setLoggedIn={props.setLoggedIn}/>
             <main className="main">
             <section className="profile">
                 <div className="profile__avatar-wrapper"
