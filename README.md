@@ -9,8 +9,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP 158.160.47.63
 
-Frontend https://...
+Frontend https://bambyary.nomoreparties.co
 
-Backend https://...
+Backend https://api.bambyary.nomoreparties.co

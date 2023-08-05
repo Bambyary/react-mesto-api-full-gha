@@ -31,7 +31,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb')
 
 app.use(helmet());
 app.use(limiter);
-app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3001', 'http://bambyary.nomoreparties.co', 'http://api.bambyary.nomoreparties.co', 'https://bambyary.nomoreparties.co', 'https://api.bambyary.nomoreparties.co'], credentials: true }));
+app.use(cors({ origin: ['http://localhost:3000', 'https://localhost:3000', 'http://localhost:3000', 'http://localhost:3001', 'http://bambyary.nomoreparties.co', 'https://bambyary.nomoreparties.co'] }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(requestLogger);

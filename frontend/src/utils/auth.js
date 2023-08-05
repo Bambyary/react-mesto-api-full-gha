@@ -1,5 +1,5 @@
 
-// const BASE_URL = 'http://127.0.0.1:4000';
+// const BASE_URL = 'http://127.0.0.1:3000';
 const BASE_URL = 'https://api.bambyary.nomoreparties.co';
 
 export const register = (email, password) => {
