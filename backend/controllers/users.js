@@ -22,7 +22,7 @@ const login = (req, res, next) => {
         return res.status(200).send({ token });
       }
 
-      throw new Unauthrized('Неправильные почта или пароль');
+      return next(new Unauthrized('Неправильные почта или пароль'));
     })
     .catch((err) => next(err));
 };
