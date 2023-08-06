@@ -28,7 +28,6 @@ class Api {
     addCard(card){
         return fetch(`${this._baseUrl}/cards`, {
             method: 'POST',
-            // credentials: 'include',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('token')}`,
                 "content-type": 'application/json; charset=UTF-8'
@@ -45,7 +44,6 @@ class Api {
 
     getUserInfo() {
         return fetch (`${this._baseUrl}/users/me`, {
-            // credentials: 'include',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('token')}`,
                 "content-type": 'application/json; charset=UTF-8'
@@ -59,7 +57,6 @@ class Api {
     editUserInfo(userData) {
         return fetch (`${this._baseUrl}/users/me`, {
             method: "PATCH",
-            // credentials: 'include',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('token')}`,
                 "content-type": 'application/json; charset=UTF-8'
@@ -78,7 +75,6 @@ class Api {
         console.log(cardId)
         return fetch (`${this._baseUrl}/cards/${cardId}`, {
             method: "DELETE",
-            // credentials: 'include',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('token')}`,
                 "content-type": 'application/json; charset=UTF-8'
@@ -92,7 +88,6 @@ class Api {
     changeLikeCardStatus (cardId, isLiked) {
         return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
             method: !isLiked ? 'PUT' : 'DELETE',
-            // credentials: 'include',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('token')}`,
                 "content-type": 'application/json; charset=UTF-8'
@@ -105,7 +100,6 @@ class Api {
     editAvatar (data) {
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: "PATCH",
-            // credentials: 'include',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('token')}`,
                 "content-type": 'application/json; charset=UTF-8'

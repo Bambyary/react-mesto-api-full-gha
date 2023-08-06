@@ -9,7 +9,6 @@ export const register = (email, password) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
-        // credentials: 'include',
         body: JSON.stringify({
             password,
             email
@@ -32,7 +31,6 @@ export const authorize = (email, password) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        // credentials: 'include',
         body: JSON.stringify({
             password,
             email
@@ -61,7 +59,6 @@ export const getToken = (token) => {
             'Content-Type': 'application/json',
              authorization: `Bearer ${token}`
         },
-        // credentials: 'include'
     }).then(res => {
         if(res.status === 200) {
             return res.json();
