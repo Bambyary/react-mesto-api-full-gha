@@ -1,6 +1,6 @@
 
 // const BASE_URL = 'http://127.0.0.1:3000';
-const BASE_URL = 'https://api.bambyary.nomoreparties.co';
+const BASE_URL = 'http://api.bambyary.nomoreparties.co';
 
 export const register = (email, password) => {
     return fetch(`${BASE_URL}/signup`, {

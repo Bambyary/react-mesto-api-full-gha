@@ -21,7 +21,7 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, max: 100, standardHeaders: true, legacyHeaders: false,
 });
 
-const { PORT = 3000 } = process.env;
+const { PORT } = process.env;
 
 const app = express();
 
