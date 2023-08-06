@@ -1,8 +1,10 @@
 const allowedCors = [
   'http://bambyary.nomoreparties.co',
   'https://bambyary.nomoreparties.co',
+  'http://localhost:3000',
   'https://localhost:3000',
   'http://localhost:3001',
+  'https://localhost:3001',
 ];
 
 module.exports = (req, res, next) => {

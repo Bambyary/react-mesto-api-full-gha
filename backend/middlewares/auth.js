@@ -2,7 +2,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET } = require('../models/config');
+const { JWT_SECRET_DEV } = require('../models/config');
+
+const { JWT_SECRET, NODE_ENV } = process.env;
 
 const Unauthorized = require('../errors/Unauthorized');
 
@@ -17,7 +19,7 @@ module.exports.auth = (req, _res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, JWT_SECRET);
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV);
   } catch (err) {
     return next(new Unauthorized('Неправильные почта или пароль.'));
   }

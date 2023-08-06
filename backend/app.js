@@ -16,12 +16,13 @@ const NotFound = require('./errors/NotFound');
 const { regExp } = require('./utils/constants');
 const { errorHeandler } = require('./middlewares/errorHeandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+require('dotenv').config();
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, max: 100, standardHeaders: true, legacyHeaders: false,
 });
 
-const { PORT } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 
