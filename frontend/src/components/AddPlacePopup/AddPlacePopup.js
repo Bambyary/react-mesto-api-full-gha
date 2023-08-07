@@ -1,5 +1,6 @@
 import React from "react";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
+import { validationAddPhoto } from '../../utils/validation';
 
 function AddPlacePopup (props) {
 
@@ -23,36 +24,7 @@ function AddPlacePopup (props) {
     }, [props.isOpen])
 
     React.useEffect (() => {
-        const isTitleValid = title !== undefined && (title.length > 1 && title.length < 30);
-
-        const httpRegex = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
-        const isLinkValid = link !== undefined && httpRegex.test(link);
-        
-
-        setTitleError(() => {
-            if (!isFocused) {
-                return setTitleError('');
-            } else if (title === '') {
-                return 'Введите название'
-            } else if (title !== '' && !isTitleValid) {
-                return 'Строка должна содержать не менее 2 символов и не более 30 символов'
-            }
-        })
-
-        setLinkError(() => {
-            if (!isFocused) {
-                return setLinkError('');
-            } else if (link === '') {
-                return 'Введите ссылку на картинку'
-            } else if (link !== '' && !isLinkValid) {
-                return 'Введена некорректная ссылка'
-            }
-        })
-
-        setFormValidity(() => ({
-            titleValid: isTitleValid,
-            linkValid: isLinkValid
-        }))
+        validationAddPhoto({title, link, setTitleError, setLinkError, setFormValidity, isFocused});
     }, [title, link, setFormValidity, setIsFocused])
 
     const handleTitleChange = (e) => {

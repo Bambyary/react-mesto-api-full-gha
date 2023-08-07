@@ -1,13 +1,10 @@
-/* eslint-disable import/no-extraneous-dependencies */
-// eslint-disable-next-line no-unused-vars
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const { CastError, DocumentNotFoundError, ValidationError } = require('mongoose').Error;
 const User = require('../models/user');
-/* eslint-disable import/no-extraneous-dependencies */
 const BadRequest = require('../errors/BadRequest');
 const Conflict = require('../errors/Conflict');
 const NotFound = require('../errors/NotFound');
-const Unauthrized = require('../errors/Unauthorized');
 const { JWT_SECRET_DEV } = require('../models/config');
 
 const { JWT_SECRET, NODE_ENV } = process.env;
@@ -17,12 +14,8 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      if (user) {
-        const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV);
-        return res.status(200).send({ token });
-      }
-
-      return next(new Unauthrized('Неправильные почта или пароль'));
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV);
+      return res.status(200).send({ token });
     })
     .catch((err) => next(err));
 };
@@ -37,13 +30,16 @@ const getUserById = (req, res, next) => {
   User.findById(req.params.userId)
     .orFail()
     .then((user) => res.status(200).send({ user }))
-    // eslint-disable-next-line consistent-return
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err instanceof CastError) {
         return next(new BadRequest('Передача некорректных данных при поиске пользователя'));
       }
 
-      return next(new NotFound('Пользователь в базе данных не найден.'));
+      if (err instanceof DocumentNotFoundError) {
+        return next(new NotFound('Пользователь в базе данных не найден.'));
+      }
+
+      return next(err);
     });
 };
 
@@ -52,11 +48,15 @@ const getUserInfo = (req, res, next) => {
     .orFail()
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err instanceof CastError) {
         return next(new BadRequest('Передача некорректных данных при поиске пользователя'));
       }
 
-      return next(new NotFound('Пользователь в базе данных не найден.'));
+      if (err instanceof DocumentNotFoundError) {
+        return next(new NotFound('Пользователь в базе данных не найден.'));
+      }
+
+      return next(err);
     });
 };
 
@@ -81,7 +81,7 @@ const createUser = (req, res, next) => {
         return next(new Conflict('Пользователь с таким email уже существует.'));
       }
 
-      if (err.name === 'ValidationError') {
+      if (err instanceof ValidationError) {
         return next(new BadRequest('Переданы некорректные данные при создании пользователя.'));
       }
 
@@ -97,13 +97,12 @@ const updateUser = (req, res, next) => {
   )
     .orFail()
     .then((user) => res.status(200).send(user))
-    // eslint-disable-next-line consistent-return
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err instanceof ValidationError) {
         return next(new BadRequest('Переданы некорректные данные при обновлении профиля.'));
       }
 
-      if (err.name === 'DocumentNotFoundError') {
+      if (err instanceof DocumentNotFoundError) {
         return next(new NotFound('Пользователь с указанным _id не найден.'));
       }
 
@@ -119,13 +118,12 @@ const updateAvatar = (req, res, next) => {
   )
     .orFail()
     .then((user) => res.status(200).send(user))
-    // eslint-disable-next-line consistent-return
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err instanceof ValidationError) {
         return next(new BadRequest('Переданы некорректные данные при обновлении аватара.'));
       }
 
-      if (err.name === 'DocumentNotFoundError') {
+      if (err instanceof DocumentNotFoundError) {
         return next(new NotFound('Пользователь с указанным _id не найден.'));
       }
 

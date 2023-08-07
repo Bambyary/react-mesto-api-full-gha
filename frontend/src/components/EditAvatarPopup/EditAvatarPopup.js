@@ -1,5 +1,6 @@
 import React from "react";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
+import { validationAvatar } from '../../utils/validation';
 
 function EditAvatarPopup (props) {
 
@@ -16,22 +17,9 @@ function EditAvatarPopup (props) {
     }, [props.isOpen])
 
     React.useEffect(() => {
-        const httpRegex = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
-        const avatarValid = avatar !== undefined && httpRegex.test(avatar);
 
-        setAvatarError(() => {
-            if (!isFocused) {
-                setAvatarError('')
-            } else if (avatar === '') {
-                return 'Введите ссылку на картинку'
-            } else if (avatar !== '' && !avatarValid) {
-                return 'Введена некорректная ссылка'
-            }
-        })
+        validationAvatar({setAvatarError, avatar, setAvatarValidity, isFocused});
 
-        setAvatarValidity(() => ({
-            avatarLinkValid: avatarValid
-        }))
     }, [avatar, setAvatarValidity, setIsFocused])
 
     const handleSubmit = (e) => {

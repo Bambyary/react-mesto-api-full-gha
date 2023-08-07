@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
-/* eslint-disable import/no-extraneous-dependencies */
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const Unauthorized = require('../errors/Unauthorized');
-const { regExp } = require('../utils/constants');
+const { regExpForLinks } = require('../utils/constants');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -22,7 +21,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator(url) {
-        return regExp.test(url);
+        return regExpForLinks.test(url);
       },
       message: 'Передана некорректная ссылка',
     },
@@ -48,7 +47,6 @@ const userSchema = new mongoose.Schema({
 
 userSchema.statics.findUserByCredentials = function (email, password, next) {
   return this.findOne({ email }).select('+password')
-  // eslint-disable-next-line consistent-return
     .then((user) => {
       if (!user) {
         return next(new Unauthorized('Неправильные почта или пароль'));

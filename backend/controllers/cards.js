@@ -1,3 +1,4 @@
+const { CastError, DocumentNotFoundError, ValidationError } = require('mongoose').Error;
 const Card = require('../models/card');
 const BadRequest = require('../errors/BadRequest');
 const Forbidden = require('../errors/Forbidden');
@@ -5,10 +6,7 @@ const NotFound = require('../errors/NotFound');
 
 const getCards = (_req, res, next) => {
   Card.find({})
-    .then((card) => {
-      console.log(card);
-      return res.status(200).send(card);
-    })
+    .then((card) => res.status(200).send(card))
     .catch((err) => next(err));
 };
 
@@ -19,7 +17,7 @@ const createCard = (req, res, next) => {
   Card.create({ name, link, owner: userId })
     .then((card) => res.status(201).send(card))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err instanceof ValidationError) {
         return next(new BadRequest('Переданы некорректные данные при создании карточки.'));
       }
 
@@ -27,10 +25,8 @@ const createCard = (req, res, next) => {
     });
 };
 
-// eslint-disable-next-line consistent-return
 const deleteCard = (req, res, next) => {
   Card.findById(req.params.cardId)
-    // eslint-disable-next-line consistent-return
     .then((card) => {
       if (!card) {
         return next(new NotFound('Карточка с указанным _id не найдена.'));
@@ -40,10 +36,10 @@ const deleteCard = (req, res, next) => {
         return next(new Forbidden('Вы не можете удалить чужую карточку.'));
       }
 
-      Card.deleteOne(card).then(() => res.status(200).send(card));
+      return Card.deleteOne(card).then(() => res.status(200).send(card));
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err instanceof CastError) {
         return next(new BadRequest('Карточка с указанным _id не найдена.'));
       }
       return next(err);
@@ -59,10 +55,10 @@ const addCardLike = (req, res, next) => {
     .orFail()
     .then((like) => res.status(201).send(like))
     .catch((err) => {
-      if (err.name === 'DocumentNotFoundError') {
+      if (err instanceof DocumentNotFoundError) {
         return next(new NotFound('Переданы некорректные данные.'));
       }
-      if (err.name === 'CastError') {
+      if (err instanceof CastError) {
         return next(new BadRequest('Передан несуществующий _id карточки. '));
       }
       return next(err);
@@ -78,10 +74,10 @@ const deleteCardLike = (req, res, next) => {
     .orFail()
     .then((like) => res.status(200).send(like))
     .catch((err) => {
-      if (err.name === 'DocumentNotFoundError') {
+      if (err instanceof DocumentNotFoundError) {
         return next(new NotFound('Переданы некорректные данные.'));
       }
-      if (err.name === 'CastError') {
+      if (err instanceof CastError) {
         return next(new BadRequest('Передан несуществующий _id карточки. '));
       }
       return next(err);

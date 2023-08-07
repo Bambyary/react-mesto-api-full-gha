@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const { regExp } = require('../utils/constants');
+const { regExpForLinks } = require('../utils/constants');
 
 const cardSchema = new mongoose.Schema({
   name: {
@@ -14,7 +14,7 @@ const cardSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(url) {
-        return regExp.test(url);
+        return regExpForLinks.test(url);
       },
 
       message: 'Передана некорректная ссылка',
@@ -28,6 +28,7 @@ const cardSchema = new mongoose.Schema({
   likes: {
     type: [mongoose.Schema.Types.ObjectId],
     default: [],
+    ref: 'user',
   },
   createAt: {
     type: Date,

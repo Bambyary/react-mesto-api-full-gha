@@ -3,6 +3,7 @@ import FormRegistration from "../FormRegistration/FormRegistration";
 import Header from "../Header/Header";
 import {useNavigate} from 'react-router-dom';
 import * as auth from '../../utils/auth';
+import {validationLogin} from '../../utils/validation';
 
 function Register (props) {
     const [email, setEmail] = React.useState('');
@@ -25,33 +26,7 @@ function Register (props) {
     }, [])
 
     React.useEffect(() => {
-        const isEmailValid = email !== undefined && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-        const isPasswordValid = password !== undefined && password.length > 8;
-
-        setEmailError(() => {
-            if(!isFocused) {
-                return setEmailError('');
-            } else if (email === '') {
-                return 'Введите email'
-            } else if (email !== '' && !isEmailValid) {
-                return 'Введён некорректный email'
-            }
-        })
-
-        setPasswordError(() => {
-            if (!isFocused) {
-                return setPasswordError('');
-            } else if (password === '') {
-                return 'Введите пароль'
-            } else if (password !== '' && !isPasswordValid) {
-                return 'Пароль должен содержать латинские символы верхнего и нижнего регистра и хотя бы одну цифру'
-            }
-        })
-
-        setFormValidity({
-            emailValid: isEmailValid,
-            passwordValid: isPasswordValid
-        })
+        validationLogin({email, password, setEmailError, setPasswordError, setFormValidity, isFocused});
     }, [email, password, setFormValidity, setIsFocused])
 
     function handleEmailChange (e) {

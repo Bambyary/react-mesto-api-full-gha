@@ -1,7 +1,5 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
@@ -13,9 +11,9 @@ const cardRoutes = require('./routes/cards');
 const { login, createUser } = require('./controllers/users');
 const { auth } = require('./middlewares/auth');
 const NotFound = require('./errors/NotFound');
-const { regExp } = require('./utils/constants');
 const { errorHeandler } = require('./middlewares/errorHeandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { regExpForLinks } = require('./utils/constants');
 require('dotenv').config();
 
 const limiter = rateLimit({
@@ -34,7 +32,7 @@ app.use(helmet());
 app.use(limiter);
 app.use(cors);
 app.use(cookieParser());
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(requestLogger);
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -51,7 +49,7 @@ app.post('/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().pattern(regExp),
+    avatar: Joi.string().pattern(regExpForLinks),
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
   }),
@@ -59,10 +57,10 @@ app.post('/signup', celebrate({
 app.use(auth);
 app.use('/', userRoutes);
 app.use('/', cardRoutes);
-app.use(errorLogger);
 app.use('*', (_req, _res, next) => {
   next(new NotFound('Страница не найдена'));
 });
+app.use(errorLogger);
 app.use(errors());
 app.use(errorHeandler);
 

@@ -1,6 +1,7 @@
 import React from "react";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
+import {validationProfile} from '../../utils/validation';
 
 function EditProfilePopup (props) {
 
@@ -24,35 +25,8 @@ function EditProfilePopup (props) {
     }, [currentUser, props.isOpen])
 
     React.useEffect(() => {
-        const isUserNameValid = name !== undefined && name.length > 1;
-        const isDescriptionValid = description !== undefined && description.length > 1;
-
-        setNameError(() => {
-            if (!isFocused) {
-                return setNameError('');
-            }else if (name === '') {
-                return 'Введите имя'
-            } else if (name !== '' && !isUserNameValid) {
-                return 'Строка должна содержать не менее 2 символов'
-            }
-        })
-
-        setDescriptionError(() => {
-            if (!isFocused) {
-                return setDescriptionError('');
-            } else if (description === '') {
-                return 'Введите описание'
-            } else if (description !== '' && !isDescriptionValid) {
-                return 'Строка должна содержать не менее 2 символов'
-            }
-        })
-
-        setFormValidity(() => ({
-            userNameValid: isUserNameValid,
-            descriptionValid: isDescriptionValid
-        }))
-    }, [name, description, setFormValidity, setIsFocused])
-
+        validationProfile({name, description, setNameError, isFocused, setDescriptionError, setFormValidity})
+    }, [name, description, setFormValidity, setIsFocused]);
 
     function handleNameChange (e) {
         setName(e.target.value);
