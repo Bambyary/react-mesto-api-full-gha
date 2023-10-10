@@ -1,14 +1,38 @@
-[![Статус тестов](../../actions/workflows/tests.yml/badge.svg)](../../actions/workflows/tests.yml)
-
 # react-mesto-api-full-gha
 Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями. 
 
-Адрес репозитория: https://bambyary.github.io/react-mesto-api-full-gha/
+## Функционал
 
-## Ссылки на проект
+* Регистрация
+* Авторизация
+* Редактирование аватара
+* Редактирование профиля
+* Добавление новой фотографии
+* Удаление карточки при клике на иконку
+* Поставить / убрать лайк
+* Открытие фотографии в полном размере
+
+## Технологии
+
+* HTML5
+* CSS
+* JavaScript (стандарт ES6)
+* React (Create React App, портирование разметки в JSX, функциональные компоненты + хуки)
+* Адаптивная верстка
+* Методология БЭМ
+* Flexbox
+* Grid Layout
+* Позиционирование
+* Псевдоклассы
+* Webpack
+* Express
+* MongodDB
+
+
+## Ссылки
 
 IP 130.193.37.169
 
-Frontend https://bambyary.nomoreparties.co
+Frontend-домен https://bambyary.nomoreparties.co
 
-Backend https://api.bambyary.nomoreparties.co
+Backend-домен https://api.bambyary.nomoreparties.co

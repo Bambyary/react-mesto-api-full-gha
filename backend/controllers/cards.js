@@ -4,7 +4,7 @@ const BadRequest = require('../errors/BadRequest');
 const Forbidden = require('../errors/Forbidden');
 const NotFound = require('../errors/NotFound');
 
-const getCards = (_req, res, next) => {
+const getCards = (req, res, next) => {
   Card.find({})
     .then((card) => res.status(200).send(card))
     .catch((err) => next(err));
