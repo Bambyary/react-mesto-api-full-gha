@@ -60,10 +60,3 @@
 
 `npm run start`
 
-## Ссылки
-
-IP 130.193.37.169
-
-Frontend-домен https://bambyary.nomoreparties.co
-
-Backend-домен https://api.bambyary.nomoreparties.co
