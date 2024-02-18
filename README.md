@@ -36,7 +36,7 @@
 
 * Перейти в репозиторий с бэкендом:
 
-`cd cd .\react-mesto-api-full-gha\backend\`
+`cd react-mesto-api-full-gha/backend`
 
 * Установить зависимости:
 
