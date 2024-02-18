@@ -38,6 +38,10 @@
 
 `cd cd .\react-mesto-api-full-gha\backend\`
 
+* Установить зависимости:
+
+`npm i`
+
 
 ## Ссылки
 
