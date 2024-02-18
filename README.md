@@ -34,6 +34,30 @@
 
 `git clone git@github.com:SorokinaMarina/react-mesto-api-full-gha.git`
 
+* Перейти в репозиторий с бэкендом:
+
+`cd cd .\react-mesto-api-full-gha\backend\`
+
+* Установить зависимости:
+
+`npm i`
+
+* Запустить сервер:
+
+`npm run dev`
+
+* Перейти в репозиторий с фронтендом:
+
+`cd ..`
+`cd frontend`
+
+* Установить зависимости:
+
+`npm i`
+
+* Запустить фронтенд:
+
+`npm run start`
 
 ## Ссылки
 
