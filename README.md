@@ -34,6 +34,10 @@
 
 `git clone git@github.com:SorokinaMarina/react-mesto-api-full-gha.git`
 
+* Перейти в репозиторий с бэкендом:
+
+`cd cd .\react-mesto-api-full-gha\backend\`
+
 
 ## Ссылки
 
