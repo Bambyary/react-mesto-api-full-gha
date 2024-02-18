@@ -28,6 +28,12 @@
 * Express
 * MongodDB
 
+## Установка и запуск проекта
+
+* Клонировать репозиторий:
+
+`git clone git@github.com:SorokinaMarina/react-mesto-api-full-gha.git`
+
 
 ## Ссылки
 
